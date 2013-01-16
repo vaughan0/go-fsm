@@ -24,7 +24,7 @@ var locked, unlocked fsm.State
 
 // Initialize the states
 locked = fsm.Actions{
-  "enter-pin": function(d *Door, pin string) fsm.State {
+  "enter-pin": func(d *Door, pin string) fsm.State {
     if pin == d.code {
       fmt.Println("PIN correct")
       // Change to the unlocked state
@@ -34,17 +34,17 @@ locked = fsm.Actions{
     // Stay in the locked state
     return nil
   },
-  "turn-handle": function(d *Door) {
+  "turn-handle": func(d *Door) {
     fmt.Println("You can't open a locked door!")
   },
 }
 unlocked = fsm.Actions{
-  "enter-pin": function(d *Door, pin string) fsm.State {
+  "enter-pin": func(d *Door, pin string) fsm.State {
     d.code = pin
     fmt.Println("Locked the door")
     return locked
   },
-  "turn-handle": function(d *Door) {
+  "turn-handle": func(d *Door) {
     fmt.Println("Door open")
   },
 }
